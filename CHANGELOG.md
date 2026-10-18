@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+- Per-pane usage: each pane shows roughly how much of the 5-hour session limit it has used, subagents included.
+- Limit forecast (Pro): under the session meter, when you hit the limit at the pace of the last 30 minutes, or where you will be when it resets.
+- Both are estimated from your local Claude Code transcripts, with tokens weighted by API prices.
+
 ## 0.3.2
 
 - Link to the new website, [paneherd.com](https://paneherd.com).

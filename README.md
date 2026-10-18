@@ -15,6 +15,7 @@ Website: [paneherd.com](https://paneherd.com). It has a guide to running several
 - **Know who is waiting**: panes that need you are highlighted, counted on the sidebar badge and in the status bar. *Go to Next Pane That Needs You* jumps straight to them.
 - **Every saved conversation**: the sidebar lists your Claude Code sessions with their titles and last prompts, searchable by title, prompt or folder, and by what was said in the conversation. Matching messages appear under each session. It warns before you open a session that may still be running in another window.
 - **Usage limits at the top**: the sidebar shows how much of your Claude plan's current session (5 hours) and week you have used, and when each resets. Claude Code reports these to the status line on Pro and Max plans, after a pane's first reply.
+- **Which pane uses the limit, and when it runs out (forecast: Pro)**: each pane shows roughly how much of the 5-hour session limit it has used. With Pro, a forecast under the session meter says when you hit the limit at the pace of the last 30 minutes, or where you will be when it resets. Both are estimated from the tokens in your local Claude Code transcripts, weighted by API prices. Usage that leaves no transcript on this computer (claude.ai, other machines) is counted against these sessions.
 - **Permission inbox (Pro)**: every pane's permission prompts collect in the sidebar, with the command, file or URL. Allow, Always (saves the "don't ask again" rule Claude offers, where Claude's own dialog would: usually the project's `.claude/settings.local.json`), Deny, or answer in the pane. Claude's dialog stays open in the pane, and whichever answers first wins. A notification offers Allow and Deny too.
 - **Conflict guard (Pro)**: before a pane edits a file that another open pane changed in the last 10 minutes, Claude asks you first and says which pane changed it.
 - **Loop and stall alarms**: a pane that repeats the same tool call, fails several tool calls in a row, or shows no activity for 10 minutes while working is flagged in the sidebar (and notified on Pro).
@@ -32,10 +33,11 @@ Website: [paneherd.com](https://paneherd.com). It has a guide to running several
 | Sessions open at once | 4 | Unlimited |
 | Live status, sidebar, session browser | ✓ | ✓ |
 | Broadcast to several panes | ✓ | ✓ |
-| Usage limits, loop and stall alarms | ✓ | ✓ |
+| Usage limits, per-pane usage, loop and stall alarms | ✓ | ✓ |
 | Permission inbox | | ✓ |
 | Conflict guard | | ✓ |
 | Task queue | | ✓ |
+| Limit forecast | | ✓ |
 | Notifications when a pane needs you | | ✓ |
 
 Pro licenses are not on sale yet. If you have a key, enter it with **Paneherd: Enter License Key…**. Keys are checked offline on your machine.
@@ -77,6 +79,7 @@ Nothing leaves your machine. Paneherd has no telemetry, and the license check ne
 - A queued prompt goes in as soon as its pane's turn ends, even when Claude ended it with a question. Pause the queue to answer first.
 - Queued prompts do not survive a window reload.
 - Usage limits appear only on Claude Pro and Max plans, and only when Paneherd can add its status line.
+- Per-pane usage and the forecast are estimates. Anthropic does not publish how the limits count tokens, so Paneherd weights them by relative API price.
 
 ---
 
