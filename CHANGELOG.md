@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+- Link to the new website, [paneherd.com](https://paneherd.com).
+
 ## 0.3.1
 
 - Screenshots on the Marketplace page.
