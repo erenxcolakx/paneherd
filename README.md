@@ -40,7 +40,7 @@ Website: [paneherd.com](https://paneherd.com). It has a guide to running several
 | Limit forecast | | ✓ |
 | Notifications when a pane needs you | | ✓ |
 
-Pro licenses are not on sale yet. If you have a key, enter it with **Paneherd: Enter License Key…**. Keys are checked offline on your machine.
+Pro is a one-time $4.99 purchase with a perpetual license key, sold at [paneherd.com](https://paneherd.com/#pricing) with a 14-day refund. Enter the key with **Paneherd: Enter License Key…**. Keys are checked offline on your machine.
 
 ## Requirements
 
