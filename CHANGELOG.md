@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.6.0
+
+- Pro is on sale: *Upgrade* opens https://paneherd.com/#pricing ($4.99 one-time, perpetual key, 14-day refund).
+- Fixed: a pane whose terminal had ended without VS Code saying so (seen when a CLI exits by itself) stayed in the sidebar, counted against the free plan's 4 sessions, and did nothing when you clicked it. Paneherd now notices that the process is gone, when you click a pane or session, when you open a session and every 30 seconds, and removes the pane.
+- Codex panes: choose *Codex* next to *New session* (or run *New Codex Session*) to run the Codex CLI in the same grid. Broadcast, arrange, restart and reopening after a reload work. Status appears from the first prompt on, once you choose *Trust all and continue* when Codex asks about Paneherd's hooks (asked once); until then the pane shows `—`. Settings: `paneherd.codexPath`, `paneherd.codexExtraArgs`, `paneherd.defaultAgent`.
+- Pane colors and icons: new panes get the next free color on their terminal tab and sidebar row (`paneherd.autoColor`). The pencil on a pane sets its name, color and icon; the terminal tab takes them when the pane restarts.
+- Sidebar personalization: `paneherd.density`, `paneherd.fontScale`, `paneherd.paneDetails`, `paneherd.sessionPrompt`, `paneherd.statusPalette` (with a color-blind-safe palette) and `paneherd.statusColors`.
+
+## 0.5.0
+
+- Chrome companion: pair the new Paneherd Companion browser extension with *Connect the Chrome Companion…* and it shows on its toolbar badge how many panes need you, lists every window's panes, and opens the editor at a pane. With Pro it also notifies you when a pane needs you and answers permission prompts (Allow, Always, Deny). It talks only to 127.0.0.1; *Disconnect Chrome Companions* forgets every paired browser.
+
 ## 0.4.1
 
 - Sidebar: the per-pane usage share (≈N%) now sits in its own column next to the refresh button instead of crowding the status line, and the locked forecast hint flows with the layout.
