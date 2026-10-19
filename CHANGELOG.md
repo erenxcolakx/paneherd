@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- Sidebar: the per-pane usage share (≈N%) now sits in its own column next to the refresh button instead of crowding the status line, and the locked forecast hint flows with the layout.
+
 ## 0.4.0
 
 - Per-pane usage: each pane shows roughly how much of the 5-hour session limit it has used, subagents included.
