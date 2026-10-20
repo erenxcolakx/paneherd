@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+- 7-day Pro trial: *Try Pro free* in the sidebar, in every Pro prompt, or **Paneherd: Start 7-Day Pro Trial** unlocks every Pro feature for 7 days, with no card or account. It can be started once; Settings Sync carries it to your other machines. The sidebar shows the days left. When it ends, open panes keep running and Paneherd says once what now needs Pro.
+- Pro now costs $2.99, once.
+- Codex and Copilot usage limits: the sidebar's usage block shows Codex's limits (5-hour and weekly, or your plan's windows) under Claude Code's, read from the session logs Codex writes on this computer (`~/.codex/sessions`, or `$CODEX_HOME`). They update after each Codex reply and show while a Codex pane is open or a window has not reset yet. Copilot's monthly premium requests show there too once you click *Connect GitHub* and allow it: Paneherd then asks GitHub (`api.github.com/copilot_internal/user`) with your VS Code GitHub sign-in every few minutes while the sidebar is open. Gemini and Cursor keep no usage Paneherd can read. `paneherd.usageLimits` turns all of them off.
+- New Marketplace name: Paneherd: Multi-Agent Console for Claude Code & Codex.
+
 ## 0.8.0
 
 - Phone remote: *Pair a Phone…* shows a QR code; scan it and allow the phone in VS Code. On paneherd.com/remote the phone then shows every window's panes and their status, sends prompts to the panes you pick and, with Pro, answers permission prompts, from anywhere. Messages go through Paneherd's relay (relay.paneherd.com) encrypted end to end; the relay cannot read them and keeps nothing. The QR code works once, for 5 minutes, and each phone can be disconnected on its own (*Disconnect Phones…*). A phone icon in the status bar shows while a phone is connected. Setting: `paneherd.remoteRelay`.
