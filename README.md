@@ -22,11 +22,12 @@ Website: [paneherd.com](https://paneherd.com). It has a guide to running several
 - **Broadcast**: type once and send it to any set of panes. Multi-line text arrives as a single paste. A pane that is still starting gets the text once its prompt is up.
 - **Task queue (Pro)**: queue a prompt instead of sending it (*Queue*, or Ctrl+Enter). The first selected pane to end its turn takes it, so prompts queued for one pane run one after another without interrupting the current task, and prompts queued for several panes are shared out among them. The queue can be paused, and a prompt that has not started can be removed.
 - **Notifications (Pro)**: a notification appears when a pane needs you and you are looking at something else.
+- **Phone remote**: run *Pair a Phone…*, scan the QR code with your phone and click *Allow*. Your phone opens [paneherd.com/remote](https://paneherd.com/remote), with no app to install, and shows every window's panes and their status and sends prompts to the panes you pick; with Pro it also answers permission prompts (Allow, Always, Deny). Messages go through Paneherd's relay encrypted end to end, see [How it works](#how-it-works). A phone icon in the status bar shows while a phone is connected, and *Disconnect Phones…* removes any phone.
 - **Chrome companion**: the Paneherd Companion extension for Chrome (coming to the Chrome Web Store) counts the panes that need you on its toolbar badge and lists every window's panes, so you can see who is waiting without leaving the browser. With Pro it also notifies you and lets you answer permission prompts from Chrome. Pair it once with a code from *Connect the Chrome Companion…*.
-- **Codex next to Claude Code**: pick *Codex* beside *New session* (or run *New Codex Session*) and the pane runs the Codex CLI in the same grid. Broadcast, arrange, restart and reopen after a reload work for it too. Status needs a one-time approval inside Codex, see [Codex panes](#codex-panes). There is no permission inbox, conflict guard or conversation list for Codex.
-- **Make panes easy to tell apart**: each new pane gets the next free color on its terminal tab and sidebar row. The pencil on a pane sets its name, color and icon (the sidebar changes at once, the terminal tab when the pane restarts with ⟳).
+- **Codex, Copilot, Gemini and Cursor next to Claude Code**: pick the agent beside *New session* (or run *New Codex Session*, *New Copilot Session*, *New Gemini Session* or *New Cursor Session*) and the pane runs that CLI in the same grid. Broadcast, arrange and restart work for every agent, and status for all but Gemini and Cursor, see [Other agents](#other-agents). The permission inbox, conflict guard, conversation list and usage limits are Claude Code's only.
+- **Make panes easy to tell apart**: each new pane gets the next free color on its terminal tab and sidebar row. The pencil on a pane sets its name, color and icon. The sidebar changes at once; the terminal tab takes the name as soon as it is the active terminal, and the color and icon when the pane restarts with ⟳. A pane you have not named is named after its first prompt.
 - **Make the sidebar yours**: `paneherd.density` (comfortable or compact), `paneherd.fontScale`, `paneherd.paneDetails` and `paneherd.sessionPrompt` choose what each row shows, and `paneherd.statusPalette` (a color-blind-safe `colorblind` palette) and `paneherd.statusColors` set the status colors. The sidebar follows your color theme; the terminal font is the editor's `terminal.integrated.fontFamily` and `fontSize`.
-- **Pick up after a reload**: the panes you had open are offered for reopening with `--resume`.
+- **Panes survive a reload**: after *Reload Window* or an extension update, the panes that were running are picked up again where they are, with their status, name and color. After you quit the editor, the panes you had open are offered for reopening with `--resume`.
 
 <img src="https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/sidebar.png" alt="The Paneherd sidebar: usage limits, the permission inbox with Allow, Always and Deny, open panes with their status, and the task queue" width="300">
 
@@ -43,6 +44,8 @@ Website: [paneherd.com](https://paneherd.com). It has a guide to running several
 | Task queue | | ✓ |
 | Limit forecast | | ✓ |
 | Notifications when a pane needs you | | ✓ |
+| Phone remote: status and sending prompts | ✓ | ✓ |
+| Phone remote: answering permission prompts | | ✓ |
 | Chrome companion: badge and pane list | ✓ | ✓ |
 | Chrome companion: notifications and answering prompts | | ✓ |
 
@@ -52,6 +55,7 @@ Pro is a one-time $4.99 purchase with a perpetual license key, sold at [paneherd
 
 - The [Claude Code CLI](https://code.claude.com/docs), signed in. Paneherd finds `claude` on `PATH`, in the standard install locations, or inside the Claude Code editor extension. You can also set `paneherd.claudePath`.
 - Optional, for Codex panes: the [Codex CLI](https://developers.openai.com/codex/cli). Paneherd finds `codex` on `PATH`, in the standard install locations, or inside the OpenAI editor extension. You can also set `paneherd.codexPath`.
+- Optional, for other panes: the [GitHub Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli) (`copilot`), the [Gemini CLI](https://geminicli.com/docs/get-started/installation/) (`gemini`) or the [Cursor CLI](https://cursor.com/docs/cli/installation) (`cursor-agent`), signed in. Paneherd finds them on `PATH` or where their installers put them; `paneherd.copilotPath`, `paneherd.geminiPath` and `paneherd.cursorPath` override that.
 - `curl`, which ships with Windows 10 and later, macOS, and most Linux distributions. Without it panes still work, but they cannot show status.
 - A trusted workspace.
 
@@ -63,7 +67,9 @@ Two hooks wait for the server's answer: the permission request hook (so the side
 
 The Chrome companion connects to a second server in each editor window, which runs only after you pair a browser. It listens on `127.0.0.1`, on the first free port from 47470 to 47479, and accepts only browser extensions (by their origin) that paired with a one-time code shown in the editor, or that hold the token pairing gave them. *Disconnect Chrome Companions* revokes every browser.
 
-Nothing leaves your machine. Paneherd has no telemetry, and the license check needs no network access.
+The phone remote is off until you pair a phone. Then each editor window and the phone connect to Paneherd's relay (`wss://relay.paneherd.com`, a Cloudflare Worker; `paneherd.remoteRelay` points elsewhere). Everything between them is encrypted end to end with AES-256-GCM under a key made on the phone during pairing, which reaches the editor sealed with the one-time code in the QR code; that code sits in the part of the link browsers never send to a server. The relay forwards sealed messages and cannot read or keep them. A QR code works once, for 5 minutes, and only after you click *Allow* in VS Code; each phone has its own key, and *Disconnect Phones…* makes it useless. See the [privacy notes](https://paneherd.com/privacy#phone-remote).
+
+Without a paired phone nothing leaves your machine. Paneherd has no telemetry, and the license check needs no network access.
 
 ## Settings
 
@@ -77,6 +83,9 @@ Nothing leaves your machine. Paneherd has no telemetry, and the license check ne
 | `paneherd.permissionInbox` | `true` | Collect permission prompts in the sidebar (Pro). |
 | `paneherd.conflictGuard` | `true` | Ask before editing a file another pane just changed (Pro). |
 | `paneherd.stallMinutes` | `10` | Flag a working pane silent this long; `0` turns it off. |
+| `paneherd.remoteRelay` | `""` | Relay for the phone remote (`wss://`). Empty uses Paneherd's own. |
+| `paneherd.defaultAgent` | `claude` | The agent a new session starts with (`claude`, `codex`, `copilot`, `gemini`, `cursor`). |
+| `paneherd.<agent>Path`, `paneherd.<agent>ExtraArgs` | | Path and extra arguments for `codex`, `copilot`, `gemini` and `cursor` panes. |
 
 ## Codex panes
 
@@ -86,11 +95,23 @@ The first time, Codex asks "7 hooks are new or changed" when the pane starts: ch
 
 Hooks need `curl` 8.3 or newer and paths without spaces or quotes; otherwise the pane runs without status. Codex hooks only report status: permission prompts stay in Codex's own dialog. Paneherd's hooks are not removed by anything you trust in `config.toml`; to undo the approval delete the `[hooks.state]` entries whose key contains `<session-flags>`.
 
+## Other agents
+
+Every agent's hooks post to the same local server as Claude Code's, under Claude Code's event names, so the sidebar shows the same states. They only report status: permission prompts and questions stay in the agent's own dialog, and the permission inbox, conflict guard, conversation list, per-pane usage and usage limits are Claude Code's only. A pane takes its title from its first prompt.
+
+- **GitHub Copilot CLI**: Paneherd passes a small plugin folder with `--plugin-dir` and starts the session with `--session-id`, which a restart passes again to resume it. Copilot reports from the first prompt on, after you answer whether you trust the folder, including *Needs permission* and *Has a question*. Paneherd does not hook tool calls before they run: Copilot denies a tool when such a hook fails, for example while the editor reloads, so there are no loop alarms for Copilot panes.
+- **Cursor CLI**: no status either. Cursor's plugin hooks (`--plugin-dir`) never report a submitted prompt or a finished turn, confirmed against the real CLI, so a Cursor pane would otherwise show *Working* forever; Paneherd shows nothing instead. The session-start and tool-use hooks it does send still carry the session id, so restart (`--resume`) and picking panes up after *Reload Window* work.
+- **Gemini CLI**: no status yet. Gemini reads extra settings only from a file that an administrator owns, so Paneherd has no per-pane way to add its hooks, and it does not change your own Gemini settings. Broadcast waits a fixed few seconds. Without hooks Paneherd cannot tell whether a Gemini session took a prompt, so restarting a Gemini pane (⟳, also to apply a new color or icon) starts a new, empty session, and Gemini panes are not offered for reopening after you quit the editor; the old conversation stays in Gemini (`gemini --resume`). A window reload keeps them running.
+
+The user's own hooks still run: Copilot and Cursor also run hooks from a project's `.claude/settings.json`, and Cursor from `~/.claude/settings.json`.
+
 ## Known limitations
 
-- A terminal tab keeps the color and icon it was created with: a change made in the sidebar reaches it when the pane restarts.
+- A terminal tab keeps the color and icon it was created with: a change made in the sidebar reaches it when the pane restarts. VS Code renames only the active terminal, so a pane that got a new name or its first prompt while in the background takes the name when you switch to it.
+- The phone remote needs a connection on both ends. It shows a window's panes only while that window is open and online, and it does not notify the phone yet.
 - A Codex pane can be reopened after a reload, or restarted with `resume`, only once its hooks have reported the session id (with its first prompt).
-- Panes do not survive a window reload. Claude Code saves the conversation, and Paneherd offers to reopen the panes with `--resume`.
+- Panes survive *Reload Window* and extension updates, not quitting the editor: Claude Code saves the conversation, and Paneherd offers to reopen the panes with `--resume`. When you reopen the editor, VS Code may start the panes' terminals again on its own (`terminal.integrated.persistentSessionReviveProcess`); Paneherd closes those and offers the sessions instead. Status needs the hook server's old port to be free after a reload; if another program took it, a picked-up pane shows `—` until you restart it (⟳).
+- Panes that are picked up again keep their status but start their loop and stall tracking over, and a permission prompt that was waiting in the inbox is answered in the pane.
 - Opening the same conversation in two places at once mixes up its history. Paneherd warns when a session was active in the last two minutes.
 - If your organization's managed settings allow only managed hooks, status is unavailable.
 - The conflict guard sees edits made with Claude's file tools, not files changed by shell commands.
@@ -103,4 +124,4 @@ Hooks need `curl` 8.3 or newer and paths without spaces or quotes; otherwise the
 
 ---
 
-Paneherd is an independent product and is not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic, PBC. Codex and OpenAI are trademarks of OpenAI; Paneherd is not affiliated with or endorsed by OpenAI either.
+Paneherd is an independent product and is not affiliated with or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic, PBC. Codex and OpenAI are trademarks of OpenAI; GitHub and Copilot of GitHub, Inc. and Microsoft; Gemini of Google LLC; Cursor of Anysphere, Inc. Paneherd is not affiliated with or endorsed by any of them either.

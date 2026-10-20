@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.0
+
+- Phone remote: *Pair a Phone…* shows a QR code; scan it and allow the phone in VS Code. On paneherd.com/remote the phone then shows every window's panes and their status, sends prompts to the panes you pick and, with Pro, answers permission prompts, from anywhere. Messages go through Paneherd's relay (relay.paneherd.com) encrypted end to end; the relay cannot read them and keeps nothing. The QR code works once, for 5 minutes, and each phone can be disconnected on its own (*Disconnect Phones…*). A phone icon in the status bar shows while a phone is connected. Setting: `paneherd.remoteRelay`.
+- Terminal tabs are named after the pane: a new pane's tab showed only the folder name until it restarted; it now takes the first prompt (or the name set with the pencil) as soon as it is the active terminal. A tab you renamed yourself in VS Code keeps your name.
+
+## 0.7.0
+
+- GitHub Copilot CLI, Cursor CLI and Gemini CLI panes: choose them next to *New session*, or run *New Copilot Session*, *New Cursor Session* or *New Gemini Session*. Copilot panes show their status through hooks Paneherd passes in a plugin folder; Cursor and Gemini panes run without status for now (their CLIs do not report the end of a turn). Broadcast, arrange and restart (resuming the session) work for all three. Settings: `paneherd.copilotPath`, `paneherd.geminiPath`, `paneherd.cursorPath` and their `…ExtraArgs`; `paneherd.defaultAgent` takes the new agents.
+- Panes survive *Reload Window* and extension updates: the running panes are picked up again in place, with their status, name and color, instead of being offered for reopening. After you quit the editor, terminals VS Code starts again on its own are closed and their sessions offered for reopening as before.
+
 ## 0.6.0
 
 - Pro is on sale: *Upgrade* opens https://paneherd.com/#pricing ($4.99 one-time, perpetual key, 14-day refund).
