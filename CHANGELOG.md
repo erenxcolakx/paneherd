@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.1
+
+- Usage limits: the sidebar now also takes Claude Code's latest report from the Usage Meter's file (`~/.paneherd-meter/status.json`) when it is newer than the last one a pane sent. Claude Code sessions outside a pane report only there, so the five-hour bar could sit hours behind (5% while the real figure was 71%) next to a pace forecast that already counted the newer spend. A report older than 30 minutes now says *Updated 3 h ago* under the session bar.
+
 ## 0.10.0
 
 - Sound: set `paneherd.sound` to *finished* (a pane ended its turn and waits for your next prompt) or *needsYou* (also a question or a permission prompt) and the computer plays its own short notification sound when that happens while you are looking elsewhere. Several panes at once make one sound. Free, off by default, and it uses only the operating system's stock sounds (Windows' default beep, macOS's Glass, a freedesktop sound on Linux if a player such as `canberra-gtk-play`, `paplay` or `aplay` is installed). Silent over Remote-SSH, WSL and dev containers, where it would play on another machine.
