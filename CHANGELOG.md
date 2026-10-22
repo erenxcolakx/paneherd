@@ -4,6 +4,7 @@
 
 - Phone remote: a pane that has a question (an MCP server asking for your input, an agent needing a choice) now shows on the phone with the question's text, and Accept and Cancel buttons. Accept asks twice (*Confirm*) and then presses Enter in the terminal, on the option the dialog highlights; Cancel presses Esc. Nothing is pressed in a pane that is not asking. Pro, like answering permission prompts; the phone page needs this version of the extension for the buttons. Phone notifications for a question now carry its text. The phone cannot see the terminal, so read the question on the card first; a long tool call above it is shortened to 200 characters.
 - Sidebar: a pane's agent badge, project and status stay on one line when the sidebar is narrow (the project name is shortened), so a pane takes two lines instead of four.
+- Sidebar: with the search box still focused, the list no longer jumps back to the top on every update (every few seconds while panes work).
 
 ## 0.10.1
 
