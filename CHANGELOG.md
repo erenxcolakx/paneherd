@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1
+
+- README: describes the run summary and the project filter for saved sessions, with an example card.
+
 ## 0.11.0
 
 - Run summary: when an agent ends a turn, the pane keeps a summary of it: time, prompts, files changed, whether tests passed, and any loop or failure warning. It holds counts only, never file names, prompts or commands, and stays in memory.
