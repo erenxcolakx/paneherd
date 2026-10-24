@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.11.0
+
+- Run summary: when an agent ends a turn, the pane keeps a summary of it: time, prompts, files changed, whether tests passed, and any loop or failure warning. It holds counts only, never file names, prompts or commands, and stays in memory.
+- A **Summary** link on the pane's row in the sidebar saves its last run as a PNG or SVG card, or as a README badge (the badge's Markdown is copied to the clipboard). Free and Pro. Two commands do the same for the newest run: *Save Last Run Summary Card* and *Save Last Run Badge*.
+- Files changed and test results come from Claude Code's tool hooks, so other agents' summaries show time and prompts only. Nothing is sent anywhere.
+- Sessions: filter saved sessions by project. Tick one or more folders in the new dropdown; it works together with the agent filter and the search box, and your choice is remembered.
+
+## 0.10.5
+
+- Custom local agents: configure up to three local CLI agents with a path, label and extra arguments; configured agents appear in the New Session picker.
+
+## 0.10.4
+
+- Usage: refreshes Claude Code, Codex and Copilot usage even when agents are started outside Paneherd.
+- Usage: the sidebar shows one selected agent at a time; choose it from the Usage dropdown.
+- Sessions: filter saved sessions by agent.
+- Forecasts: adds pace-based forecasts for reported usage windows.
+
+## 0.10.3
+
+- Usage limits: when a pane reports Claude Code's limits, Paneherd also writes them to the Usage Meter's file (`~/.paneherd-meter/status.json`). The status-bar meter was staying on an old figure (for example 5%) while the sidebar already showed the live one from the pane (71%), because only sessions outside a pane used to update that file.
+
 ## 0.10.2
 
 - Phone remote: a pane that has a question (an MCP server asking for your input, an agent needing a choice) now shows on the phone with the question's text, and Accept and Cancel buttons. Accept asks twice (*Confirm*) and then presses Enter in the terminal, on the option the dialog highlights; Cancel presses Esc. Nothing is pressed in a pane that is not asking. Pro, like answering permission prompts; the phone page needs this version of the extension for the buttons. Phone notifications for a question now carry its text. The phone cannot see the terminal, so read the question on the card first; a long tool call above it is shortened to 200 characters.

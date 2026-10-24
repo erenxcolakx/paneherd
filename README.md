@@ -4,7 +4,7 @@ A multi-agent console for Claude Code. Run several Claude Code sessions side by 
 
 Paneherd opens each session as a real terminal in the editor area and lays them out as a grid. A sidebar lists your open panes with live status and every saved Claude Code conversation, so you can resume any of them in one click.
 
-Website: [paneherd.com](https://paneherd.com). It has a guide to running several Claude Code sessions at once and a comparison with Claude Code's own tools.
+Website: [paneherd.com](https://paneherd.com). Guides: [run several Claude Code sessions at once](https://paneherd.com/guides/multiple-claude-code-sessions), [Claude Code worktrees](https://paneherd.com/guides/claude-code-worktrees), [run Codex and Claude Code together](https://paneherd.com/guides/run-codex-and-claude-code-together), [Claude Code usage limits](https://paneherd.com/claude-code-usage-limit) and [how Paneherd compares](https://paneherd.com/compare) with Claude Code's own tools, VS Code, Superset, Conductor, Claude Squad and cmux.
 
 ![Four Claude Code sessions in a grid, with the Paneherd sidebar: usage limits, three permission requests, open panes and a queued prompt](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/grid.png)
 
