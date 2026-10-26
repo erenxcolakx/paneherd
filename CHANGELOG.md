@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.12.3
+
+- Removed the run summary: the *Summary* link on a pane's row and the commands *Save Last Run Summary Card…* and *Save Last Run Badge (README)…*. It was little used and took room on every row.
+- Usage forecast for weekly and monthly windows (Claude's week, Codex's week, Copilot's premium requests) now uses the pace of the last day, or the window's average so far, instead of the last 30 minutes. A busy half hour is no longer stretched over the night, which made "limit in 17 h" appear when you were about to stop working. The 5-hour windows still use the last 30 minutes.
+
+## 0.12.2
+
+- Usage forecast: when the predicted time falls on another day, it names the day ("in 16 h 58 min (Tue 02:33 AM)"), so a time after midnight is not read as today.
+
+## 0.12.1
+
+- Usage meter: figures that are more than 10 minutes old are dimmed and say when they were last updated, instead of looking current. They come from the last reply, so after a quiet stretch they may have changed (for example when the week's window moved).
+- New setting `paneherd.liveClaudeUsage` (off by default): keeps Claude's session and week figures current between replies by asking Anthropic once a minute with Claude Code's own sign-in token. The README says exactly what is sent.
+
+## 0.12.0
+
+- Own git worktree: tick *Own git worktree* next to *New session* in the sidebar, or run *New Session in Own Git Worktree*, and the pane runs in a fresh worktree on its own `paneherd/` branch, under `.claude/worktrees/` in the repository. Agents in the same repository no longer overwrite each other's files. Closing the pane removes the worktree and branch only when the pane never took a prompt and nothing in it changed; otherwise it is kept (so work is never lost and the saved conversation can still be resumed). Outside a git repository the session opens as before.
+
+## 0.11.2
+
+- Task queue: prompts you queued stay queued across a window reload, for the panes that come back. A prompt that was being typed in at that moment comes back as failed, so it is never typed twice.
+- Run summary: the card shows roughly how much of your 5-hour limit the session had used (Claude Code panes).
+
 ## 0.11.1
 
 - README: describes the run summary and the project filter for saved sessions, with an example card.

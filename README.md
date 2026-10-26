@@ -19,11 +19,8 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 - **Permission inbox (Pro)**: every pane's permission prompts collect in the sidebar, with the command, file or URL. Allow, Always (saves the "don't ask again" rule Claude offers, where Claude's own dialog would: usually the project's `.claude/settings.local.json`), Deny, or answer in the pane. Claude's dialog stays open in the pane, and whichever answers first wins. A notification offers Allow and Deny too.
 - **Conflict guard (Pro)**: before a pane edits a file that another open pane changed in the last 10 minutes, Claude asks you first and says which pane changed it.
 - **Loop and stall alarms**: a pane that repeats the same tool call, fails several tool calls in a row, or shows no activity for 10 minutes while working is flagged in the sidebar (and notified on Pro).
+- **Own git worktree**: tick *Own git worktree* next to *New session* (or run *New Session in Own Git Worktree*) and the pane runs in a fresh worktree of the repository, on its own `paneherd/` branch, under `.claude/worktrees/` (kept out of `git status` through the repository's local exclude file). Agents working in the same repository can no longer overwrite each other's files. When you close the pane, a worktree that never took a prompt and has no changes or commits of its own is removed with its branch; any other is kept, so no work is lost and the conversation can still be resumed from its folder. Merge or delete the branches yourself. A folder that is not in a git repository opens as it is. Claude Code may ask to trust each new worktree folder.
 - **Broadcast**: type once and send it to any set of panes. Multi-line text arrives as a single paste. A pane that is still starting gets the text once its prompt is up.
-- **Run summary**: when an agent ends a turn, the pane's row gets a *Summary* link. Save the run as a card (PNG or SVG: time, prompts, files changed, whether tests passed, any loop or failure warning) or as a small badge for your README (its Markdown is copied for you). Counts only: no file names, prompts or commands, and nothing leaves your machine. Files changed and test results are known for Claude Code panes; other agents show time and prompts. Free and Pro.
-
-  ![An example run summary card: Claude Code finished a run, 12 min, 5 files changed, tests passed, with paneherd.com in the corner](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/run-card.png)
-
 - **Task queue (Pro)**: queue a prompt instead of sending it (*Queue*, or Ctrl+Enter). The first selected pane to end its turn takes it, so prompts queued for one pane run one after another without interrupting the current task, and prompts queued for several panes are shared out among them. The queue can be paused, and a prompt that has not started can be removed.
 - **Notifications (Pro)**: a notification appears when a pane needs you and you are looking at something else. A paired phone can get them too (see *Phone remote*).
 - **Sound**: set `paneherd.sound` to *finished* or *needsYou* and the computer plays its own short notification sound when a pane ends its turn (or, with *needsYou*, asks a question or needs permission) while you are looking elsewhere. Free and off by default; it uses only the system's stock sounds and is silent over Remote-SSH, WSL and dev containers.
@@ -79,6 +76,8 @@ The phone remote is off until you pair a phone. Then each editor window and the 
 
 Copilot's premium requests come from GitHub: after you click *Connect GitHub* in the sidebar and allow it in VS Code's sign-in, Paneherd sends your VS Code GitHub sign-in to `api.github.com/copilot_internal/user`, the endpoint the Copilot editor extensions read it from, every few minutes while the sidebar is open. That endpoint is not documented and may change.
 
+Claude's usage figures normally come from Claude Code's status line, so they update with each reply. `paneherd.liveClaudeUsage` is off by default; when you turn it on, Paneherd reads the sign-in token Claude Code keeps in `~/.claude/.credentials.json` and, once a minute, sends it to `api.anthropic.com/api/oauth/usage`, the request Claude Code's own `/usage` makes, so the figures stay current between replies. It never refreshes or stores the token, and an expired one is not sent. That endpoint is not documented and may change or stop working.
+
 Apart from that and a paired phone, nothing leaves your machine. Paneherd has no telemetry, and the license check needs no network access.
 
 ## Settings
@@ -90,6 +89,7 @@ Apart from that and a paired phone, nothing leaves your machine. Paneherd has no
 | `paneherd.gridColumns` | `auto` | Columns in the grid (`auto`, `1`–`4`). |
 | `paneherd.notifications` | `true` | Notify when a pane needs you (Pro). |
 | `paneherd.usageLimits` | `true` | Show the plan usage limits; adds a status line to panes that have none. |
+| `paneherd.liveClaudeUsage` | `false` | Keep Claude's usage figures current between replies by asking Anthropic once a minute with Claude Code's sign-in token (see Privacy). |
 | `paneherd.permissionInbox` | `true` | Collect permission prompts in the sidebar (Pro). |
 | `paneherd.conflictGuard` | `true` | Ask before editing a file another pane just changed (Pro). |
 | `paneherd.stallMinutes` | `10` | Flag a working pane silent this long; `0` turns it off. |
@@ -127,7 +127,7 @@ The user's own hooks still run: Copilot and Cursor also run hooks from a project
 - The conflict guard sees edits made with Claude's file tools, not files changed by shell commands.
 - A stall alarm means silence, not a fault: a long build or test run looks the same.
 - A queued prompt goes in as soon as its pane's turn ends, even when Claude ended it with a question. Pause the queue to answer first.
-- Queued prompts do not survive a window reload.
+- Queued prompts survive a window reload for the panes that come back; a prompt that was being typed in when the window reloaded comes back as failed instead of being typed twice.
 - Usage limits appear only on Claude Pro and Max plans, and only when Paneherd can add its status line.
 - *Show* in the Chrome companion selects the pane in its own window, but the operating system brings forward the editor window that last had focus. Chrome asks once before it opens the editor.
 - Per-pane usage and the forecast are estimates. Anthropic does not publish how the limits count tokens, so Paneherd weights them by relative API price.
