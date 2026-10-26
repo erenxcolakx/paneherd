@@ -18,6 +18,8 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 - **Which pane uses the limit, and when it runs out (forecast: Pro)**: each pane shows roughly how much of the 5-hour session limit it has used. With Pro, a forecast under the session meter says when you hit the limit at the pace of the last 30 minutes, or where you will be when it resets. Both are estimated from the tokens in your local Claude Code transcripts, weighted by API prices. Usage that leaves no transcript on this computer (claude.ai, other machines) is counted against these sessions.
 - **Permission inbox (Pro)**: every pane's permission prompts collect in the sidebar, with the command, file or URL. Allow, Always (saves the "don't ask again" rule Claude offers, where Claude's own dialog would: usually the project's `.claude/settings.local.json`), Deny, or answer in the pane. Claude's dialog stays open in the pane, and whichever answers first wins. A notification offers Allow and Deny too.
 - **Conflict guard (Pro)**: before a pane edits a file that another open pane changed in the last 10 minutes, Claude asks you first and says which pane changed it.
+- **Pane budget (Pro)**: set `paneherd.paneBudget` to the share of your 5-hour Claude limit one pane may use, and Claude asks before that pane's next tool call once it passes it, then again after every further step. Off by default.
+- **Prompt cache clock**: a pane's row shows when its conversation's prompt cache runs out, and once it has, roughly what the next reply costs in points of your limit.
 - **Loop and stall alarms**: a pane that repeats the same tool call, fails several tool calls in a row, or shows no activity for 10 minutes while working is flagged in the sidebar (and notified on Pro).
 - **Own git worktree**: tick *Own git worktree* next to *New session* (or run *New Session in Own Git Worktree*) and the pane runs in a fresh worktree of the repository, on its own `paneherd/` branch, under `.claude/worktrees/` (kept out of `git status` through the repository's local exclude file). Agents working in the same repository can no longer overwrite each other's files. When you close the pane, a worktree that never took a prompt and has no changes or commits of its own is removed with its branch; any other is kept, so no work is lost and the conversation can still be resumed from its folder. Merge or delete the branches yourself. A folder that is not in a git repository opens as it is. Claude Code may ask to trust each new worktree folder.
 - **Broadcast**: type once and send it to any set of panes. Multi-line text arrives as a single paste. A pane that is still starting gets the text once its prompt is up.
@@ -43,6 +45,7 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 | Usage limits, per-pane usage, loop and stall alarms | ✓ | ✓ |
 | Permission inbox | | ✓ |
 | Conflict guard | | ✓ |
+| Pane budget | | ✓ |
 | Task queue | | ✓ |
 | Limit forecast | | ✓ |
 | Notifications when a pane needs you | | ✓ |
@@ -92,6 +95,8 @@ Apart from that and a paired phone, nothing leaves your machine. Paneherd has no
 | `paneherd.liveClaudeUsage` | `false` | Keep Claude's usage figures current between replies by asking Anthropic once a minute with Claude Code's sign-in token (see Privacy). |
 | `paneherd.permissionInbox` | `true` | Collect permission prompts in the sidebar (Pro). |
 | `paneherd.conflictGuard` | `true` | Ask before editing a file another pane just changed (Pro). |
+| `paneherd.paneBudget` | `0` | Ask once a pane has used more than this many percentage points of the 5-hour Claude limit; `0` is off (Pro). |
+| `paneherd.paneBudgetStep` | `10` | Points added to a pane's budget each time it is asked. |
 | `paneherd.stallMinutes` | `10` | Flag a working pane silent this long; `0` turns it off. |
 | `paneherd.remoteRelay` | `""` | Relay for the phone remote (`wss://`). Empty uses Paneherd's own. |
 | `paneherd.defaultAgent` | `claude` | The agent a new session starts with (`claude`, `codex`, `copilot`, `gemini`, `cursor`). |

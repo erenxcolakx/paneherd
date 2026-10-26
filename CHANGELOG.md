@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.0
+
+- Pane budget (Pro): set `paneherd.paneBudget` to the share of your 5-hour Claude limit a single pane may use (in percentage points; 0 is off, the default). Past it, Claude asks before the pane's next tool call, then again each time the pane uses another `paneherd.paneBudgetStep` points (10 by default). The share is estimated from local transcripts. Claude Code panes only.
+- Prompt cache clock on each pane's row (Claude Code panes): "cache 3 min" in the last 5 minutes before the cache runs out, and for half an hour after it ran out, "cache cold · next reply ≈1.2%", roughly what the next reply will cost in points of your 5-hour limit because the whole conversation is written again.
+
 ## 0.12.3
 
 - Removed the run summary: the *Summary* link on a pane's row and the commands *Save Last Run Summary Card…* and *Save Last Run Badge (README)…*. It was little used and took room on every row.
