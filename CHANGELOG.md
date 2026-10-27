@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.1
+
+- Pane budget: the permission inbox now says why Claude is asking ("this pane has used about 12% of your 5-hour limit (budget 10%)"). Before, the question showed up as an ordinary permission request.
+- Pane shares under 1 point are shown with two decimals instead of rounding to 0.
+
 ## 0.13.0
 
 - Pane budget (Pro): set `paneherd.paneBudget` to the share of your 5-hour Claude limit a single pane may use (in percentage points; 0 is off, the default). Past it, Claude asks before the pane's next tool call, then again each time the pane uses another `paneherd.paneBudgetStep` points (10 by default). The share is estimated from local transcripts. Claude Code panes only.

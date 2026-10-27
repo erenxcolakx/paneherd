@@ -8,6 +8,8 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 
 ![Four Claude Code sessions in a grid, with the Paneherd sidebar: usage limits, three permission requests, open panes and a queued prompt](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/grid.png)
 
+![Three Claude Code sessions working side by side while permission requests are answered from the Paneherd sidebar](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/demo.gif)
+
 ## Features
 
 - **Grid of sessions**: new sessions and resumed conversations open as editor-area terminals arranged in 1–4 columns. *Arrange Panes in a Grid* tidies them up at any time.
