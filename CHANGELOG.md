@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.3
+
+- Slash commands sent to a pane (from the phone, *Send to Open Panes…* or the task queue), such as `/clear` or `/model`, get a single Enter. Before, Paneherd pressed Enter again a few times because Claude reports no prompt for them, which could pick the first item of a menu like `/resume` or `/model`.
+
 ## 0.13.2
 
 - Phone remote: long messages in a pane's conversation are shown whole. Before, Claude's replies were cut at 4,000 characters and your own messages at 2,000, so the end of a long answer was missing on the phone.
