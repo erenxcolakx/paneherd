@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.2
+
+- Phone remote: long messages in a pane's conversation are shown whole. Before, Claude's replies were cut at 4,000 characters and your own messages at 2,000, so the end of a long answer was missing on the phone.
+
 ## 0.13.1
 
 - Pane budget: the permission inbox now says why Claude is asking ("this pane has used about 12% of your 5-hour limit (budget 10%)"). Before, the question showed up as an ordinary permission request.
