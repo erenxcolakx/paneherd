@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.14.0
+
+- Add local agents from the sidebar: the agent picker beside *New session* has **＋ Add local agent…**, which lists the agents found on your `PATH` (Aider, OpenCode, Goose, Qwen Code, Crush, Amp, Ollama, LM Studio), or lets you browse for any executable, then asks for a name and the arguments to start with. **⚙ Manage local agents…** starts, renames, changes or removes one. Both are also commands. Before, local agents could only be set up by hand in settings.
+- Local agents' panes, error messages and the phone remote use the name you gave the agent instead of "Custom agent 1".
+- The sidebar's agent picker updates as soon as a local agent's settings change.
+- Phone remote: **＋ New session** under each window's panes starts a session from the phone. Pick an agent and one of the folders the sidebar offers (the workspace's and those of recent sessions); the new pane's conversation opens right away. The phone names folders by an id, never by path, and the free plan's pane limit applies as in VS Code.
+- Phone remote: questions Claude asks with options (*AskUserQuestion*) can be answered from the phone (Pro, with the permission inbox on). Tap an option, several where the question allows it, or type your own answer, then **Answer**; **Skip** declines. Before, the pane showed only "Needs permission" and the question had to be answered in the terminal. The sidebar, Chrome and VS Code notifications no longer offer Allow for a question, which would have sent it with no answer.
+- Phone remote: prompts you send while Claude is working now show up in the pane's conversation once Claude takes them in. Before, they were missing, because Claude records them differently from other prompts.
+
 ## 0.13.3
 
 - Slash commands sent to a pane (from the phone, *Send to Open Panes…* or the task queue), such as `/clear` or `/model`, get a single Enter. Before, Paneherd pressed Enter again a few times because Claude reports no prompt for them, which could pick the first item of a menu like `/resume` or `/model`.
