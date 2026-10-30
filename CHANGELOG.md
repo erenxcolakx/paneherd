@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.15.0
+
+- Sidebar tour: the first time the sidebar opens after install, a card at its top walks through what Paneherd does and where each part is: starting a session, pane status, the permission inbox, broadcast and the queue, usage limits and the phone remote, with a button to try the first and the last. Step with Next and Back, the dots or the arrow keys; Skip or Esc closes it. Open it again with *Show the Tour* in the sidebar's ⋯ menu (or *Paneherd: Show the Tour*).
+- Lead sessions (Pro): *Paneherd: New Lead Session…* takes a goal and opens a Claude Code pane that plans how to split it. Once you approve the plan, it starts worker panes, each in its own git worktree and branch, waits for them and reads their reports. Each worker runs at the tier the lead picks: light (Haiku, low effort), standard (Sonnet) or heavy (Opus), set in `paneherd.orchestration.tiers`. A light task without a check runs at standard. At most 3 workers run at once and 6 per goal (`paneherd.orchestration.maxWorkers`, `maxWorkersPerGoal`). Workers' permission prompts reach the inbox and the phone as usual. In the sidebar, a lead's pane is marked **Lead** and its workers are listed right under it, indented. On the phone, **＋ New session** offers **Lead session** too: pick a folder and type the goal. A lead's plan card, in the sidebar and on the phone, gives a rough estimate of how much of the 5-hour window the plan may take, from the workers it lists, and says when that may be more than is left. The estimate comes from typical costs per tier and the window's current rate, so it needs the usage display.
+- Plans: when Claude asks to leave plan mode, the plan shows in the sidebar's permission requests and on the phone, with **Approve**, **Approve, accept edits** (the session then makes file edits without asking) and **Revise…**, which sends the plan back with your note and Claude rewrites it. A VS Code notification offers Approve too. Before, a plan could only be answered in the terminal. Pro, with the permission inbox on.
+- OpenCode panes: pick OpenCode beside *New session* (or run *New OpenCode Session*). A small plugin of Paneherd's reports *Working*, *Needs permission*, *Has a question* and *Your turn*, and ⟳ resumes the session. OpenCode 1.x only; OpenCode 2 panes run without status for now. OpenCode is no longer offered as a local agent.
+- Qwen Code panes: pick Qwen Code beside *New session* (or run *New Qwen Code Session*). Its hooks report *Working*, *Needs permission* and *Your turn*, and ⟳ resumes the session. Your own Qwen settings and hooks stay. Qwen Code is no longer offered as a local agent.
+- Factory Droid panes: pick Droid beside *New session* (or run *New Droid Session*). Its hooks report *Working*, *Needs permission* and *Your turn* once you have trusted the folder, and ⟳ resumes the session. Your own Droid settings and hooks stay.
+- Phone remote: Markdown headings in Claude's replies show as headings instead of # marks.
+- The sidebar no longer offers Pro's permission inbox when a Codex, Copilot, OpenCode, Qwen Code or Droid pane needs permission: the inbox holds Claude Code's prompts only, so those are still answered in the pane.
+
+## 0.14.1
+
+- Usage shares and the cache clock use the current model prices: Opus 5.5, Sonnet 5.5 and Haiku 5.5 cost 40 : 20 : 1, and a cache read on Opus and Sonnet 5.5 costs a twentieth of the input price instead of a tenth. Before, Haiku sessions showed about 20 times too large a share of your 5-hour limit, and the cost of a cold cache on Opus or Sonnet 5.5 was shown too low.
+
 ## 0.14.0
 
 - Add local agents from the sidebar: the agent picker beside *New session* has **＋ Add local agent…**, which lists the agents found on your `PATH` (Aider, OpenCode, Goose, Qwen Code, Crush, Amp, Ollama, LM Studio), or lets you browse for any executable, then asks for a name and the arguments to start with. **⚙ Manage local agents…** starts, renames, changes or removes one. Both are also commands. Before, local agents could only be set up by hand in settings.

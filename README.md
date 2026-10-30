@@ -24,15 +24,17 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 - **Prompt cache clock**: a pane's row shows when its conversation's prompt cache runs out, and once it has, roughly what the next reply costs in points of your limit.
 - **Loop and stall alarms**: a pane that repeats the same tool call, fails several tool calls in a row, or shows no activity for 10 minutes while working is flagged in the sidebar (and notified on Pro).
 - **Own git worktree**: tick *Own git worktree* next to *New session* (or run *New Session in Own Git Worktree*) and the pane runs in a fresh worktree of the repository, on its own `paneherd/` branch, under `.claude/worktrees/` (kept out of `git status` through the repository's local exclude file). Agents working in the same repository can no longer overwrite each other's files. When you close the pane, a worktree that never took a prompt and has no changes or commits of its own is removed with its branch; any other is kept, so no work is lost and the conversation can still be resumed from its folder. Merge or delete the branches yourself. A folder that is not in a git repository opens as it is. Claude Code may ask to trust each new worktree folder.
+- **Lead sessions (Pro)**: give one Claude Code pane a goal, and it plans how to split it across worker panes, each in its own git worktree and branch. You approve the plan first; then the lead starts the workers, waits for them and reads their reports. Workers run at the model and effort of the tier the lead picks, so mechanical work goes to a cheaper model. See [Lead sessions](#lead-sessions).
 - **Broadcast**: type once and send it to any set of panes. Multi-line text arrives as a single paste. A pane that is still starting gets the text once its prompt is up.
 - **Task queue (Pro)**: queue a prompt instead of sending it (*Queue*, or Ctrl+Enter). The first selected pane to end its turn takes it, so prompts queued for one pane run one after another without interrupting the current task, and prompts queued for several panes are shared out among them. The queue can be paused, and a prompt that has not started can be removed.
 - **Notifications (Pro)**: a notification appears when a pane needs you and you are looking at something else. A paired phone can get them too (see *Phone remote*).
 - **Sound**: set `paneherd.sound` to *finished* or *needsYou* and the computer plays its own short notification sound when a pane ends its turn (or, with *needsYou*, asks a question or needs permission) while you are looking elsewhere. Free and off by default; it uses only the system's stock sounds and is silent over Remote-SSH, WSL and dev containers.
 - **Phone remote**: click the phone icon at the top of the sidebar (or run *Pair a Phone…*), scan the QR code with your phone and click *Allow*. Your phone opens [paneherd.com/remote](https://paneherd.com/remote), with no app to install, and shows every window's panes and their status and sends prompts to the panes you pick. Tap a pane to read its recent conversation (your prompts, the agent's replies and a line per tool call, for Claude Code and Codex panes) and to prompt just that pane. The paperclip next to the prompt box attaches images, such as a screenshot of a bug: each is saved in the pane's folder under `.paneherd/phone` (ignored by git, deleted after 7 days) and its path goes into the prompt for the agent to open. With Pro it also answers permission prompts (Allow, Always, Deny), answers a pane's question with Accept (asks twice, then presses Enter in the terminal) or Cancel (Esc), and, once you tap *Notify me on this phone*, gets a notification when a pane has needed you for 20 seconds (2 minutes while VS Code has that pane in front of you, since an open window does not mean you are at the computer); on an iPhone, add the page to the Home Screen and pair it there (it has a *Scan the QR code* button) for that. Messages go through Paneherd's relay encrypted end to end, see [How it works](#how-it-works). A phone icon in the status bar shows while a phone is connected, and *Disconnect Phones…* removes any phone.
 - **Chrome companion**: the Paneherd Companion extension for Chrome (coming to the Chrome Web Store) counts the panes that need you on its toolbar badge and lists every window's panes, so you can see who is waiting without leaving the browser. With Pro it also notifies you and lets you answer permission prompts from Chrome. Pair it once with a code from *Connect the Chrome Companion…*.
-- **Codex, Copilot, Gemini and Cursor next to Claude Code**: pick the agent beside *New session* (or run *New Codex Session*, *New Copilot Session*, *New Gemini Session* or *New Cursor Session*) and the pane runs that CLI in the same grid. Broadcast, arrange and restart work for every agent, and status for all but Gemini and Cursor, see [Other agents](#other-agents). Any other CLI, such as Aider or a local model, runs as a [local agent](#local-agents). The permission inbox, conflict guard and conversation list are Claude Code's only.
+- **Codex, Copilot, Gemini, Cursor, OpenCode, Qwen Code and Droid next to Claude Code**: pick the agent beside *New session* (or run *New Codex Session*, *New Copilot Session*, *New Gemini Session*, *New Cursor Session*, *New OpenCode Session*, *New Qwen Code Session* or *New Droid Session*) and the pane runs that CLI in the same grid. Broadcast, arrange and restart work for every agent, and status for all but Gemini and Cursor, see [Other agents](#other-agents). Any other CLI, such as Aider or a local model, runs as a [local agent](#local-agents). The permission inbox, conflict guard and conversation list are Claude Code's only.
 - **Make panes easy to tell apart**: each new pane gets the next free color on its terminal tab and sidebar row. The pencil on a pane sets its name, color and icon. The sidebar changes at once; the terminal tab takes the name as soon as it is the active terminal, and the color and icon when the pane restarts with ⟳. A pane you have not named is named after its first prompt.
 - **Make the sidebar yours**: `paneherd.density` (comfortable or compact), `paneherd.fontScale`, `paneherd.paneDetails` and `paneherd.sessionPrompt` choose what each row shows, and `paneherd.statusPalette` (a color-blind-safe `colorblind` palette) and `paneherd.statusColors` set the status colors. The sidebar follows your color theme; the terminal font is the editor's `terminal.integrated.fontFamily` and `fontSize`.
+- **Tour**: the first time the sidebar opens, a short tour at its top shows what each part does and where it is. *Show the Tour* in the sidebar's ⋯ menu brings it back.
 - **Panes survive a reload**: after *Reload Window* or an extension update, the panes that were running are picked up again where they are, with their status, name and color. After you quit the editor, the panes you had open are offered for reopening with `--resume`.
 
 <img src="https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/sidebar.png" alt="The Paneherd sidebar: usage limits, the permission inbox with Allow, Always and Deny, open panes with their status, and the task queue" width="300">
@@ -49,6 +51,7 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 | Conflict guard | | ✓ |
 | Pane budget | | ✓ |
 | Task queue | | ✓ |
+| Lead sessions | | ✓ |
 | Limit forecast | | ✓ |
 | Notifications when a pane needs you | | ✓ |
 | Phone remote: status, conversation history and sending prompts | ✓ | ✓ |
@@ -65,7 +68,7 @@ Pro is a one-time $2.99 purchase with a perpetual license key, sold at [paneherd
 
 - The [Claude Code CLI](https://code.claude.com/docs), signed in. Paneherd finds `claude` on `PATH`, in the standard install locations, or inside the Claude Code editor extension. You can also set `paneherd.claudePath`.
 - Optional, for Codex panes: the [Codex CLI](https://developers.openai.com/codex/cli). Paneherd finds `codex` on `PATH`, in the standard install locations, or inside the OpenAI editor extension. You can also set `paneherd.codexPath`.
-- Optional, for other panes: the [GitHub Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli) (`copilot`), the [Gemini CLI](https://geminicli.com/docs/get-started/installation/) (`gemini`) or the [Cursor CLI](https://cursor.com/docs/cli/installation) (`cursor-agent`), signed in. Paneherd finds them on `PATH` or where their installers put them; `paneherd.copilotPath`, `paneherd.geminiPath` and `paneherd.cursorPath` override that.
+- Optional, for other panes: the [GitHub Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli) (`copilot`), the [Gemini CLI](https://geminicli.com/docs/get-started/installation/) (`gemini`), the [Cursor CLI](https://cursor.com/docs/cli/installation) (`cursor-agent`), [OpenCode](https://opencode.ai/docs/) 1.x (`opencode`), [Qwen Code](https://github.com/QwenLM/qwen-code) (`qwen`) or [Factory Droid](https://docs.factory.ai/cli/getting-started/quickstart) (`droid`), signed in. Paneherd finds them on `PATH` or where their installers put them; `paneherd.copilotPath`, `paneherd.geminiPath` and `paneherd.cursorPath` override that.
 - `curl`, which ships with Windows 10 and later, macOS, and most Linux distributions. Without it panes still work, but they cannot show status.
 - A trusted workspace.
 
@@ -101,8 +104,11 @@ Apart from that and a paired phone, nothing leaves your machine. Paneherd has no
 | `paneherd.paneBudgetStep` | `10` | Points added to a pane's budget each time it is asked. |
 | `paneherd.stallMinutes` | `10` | Flag a working pane silent this long; `0` turns it off. |
 | `paneherd.remoteRelay` | `""` | Relay for the phone remote (`wss://`). Empty uses Paneherd's own. |
-| `paneherd.defaultAgent` | `claude` | The agent a new session starts with (`claude`, `codex`, `copilot`, `gemini`, `cursor`). |
-| `paneherd.<agent>Path`, `paneherd.<agent>ExtraArgs` | | Path and extra arguments for `codex`, `copilot`, `gemini` and `cursor` panes. |
+| `paneherd.orchestration.tiers` | Haiku · Sonnet · Opus | The agent, model and effort a worker runs at each tier (`light`, `standard`, `heavy`), see [Lead sessions](#lead-sessions). |
+| `paneherd.orchestration.maxWorkers` | `3` | Worker panes one lead runs at once. |
+| `paneherd.orchestration.maxWorkersPerGoal` | `6` | Worker panes one lead may open in all. |
+| `paneherd.defaultAgent` | `claude` | The agent a new session starts with (`claude`, `codex`, `copilot`, `gemini`, `cursor`, `opencode`, `qwen`, `droid`). |
+| `paneherd.<agent>Path`, `paneherd.<agent>ExtraArgs` | | Path and extra arguments for `codex`, `copilot`, `gemini`, `cursor`, `opencode`, `qwen` and `droid` panes. |
 
 ## Codex panes
 
@@ -118,13 +124,16 @@ Every agent's hooks post to the same local server as Claude Code's, under Claude
 
 - **GitHub Copilot CLI**: Paneherd passes a small plugin folder with `--plugin-dir` and starts the session with `--session-id`, which a restart passes again to resume it. Copilot reports from the first prompt on, after you answer whether you trust the folder, including *Needs permission* and *Has a question*. Paneherd does not hook tool calls before they run: Copilot denies a tool when such a hook fails, for example while the editor reloads, so there are no loop alarms for Copilot panes.
 - **Cursor CLI**: no status either. Cursor's plugin hooks (`--plugin-dir`) never report a submitted prompt or a finished turn, confirmed against the real CLI, so a Cursor pane would otherwise show *Working* forever; Paneherd shows nothing instead. The session-start and tool-use hooks it does send still carry the session id, so restart (`--resume`) and picking panes up after *Reload Window* work.
+- **OpenCode** (1.x): Paneherd points `OPENCODE_CONFIG_DIR` at a folder of its own with a small plugin, which OpenCode loads after your own config, so your settings and providers stay. The plugin reports from the start, including *Needs permission* and *Has a question*, and posts straight to the editor with no `curl` or shell. It reads the pane from the terminal's environment and does nothing in an OpenCode started elsewhere, and it removes the token from the environment, so the commands OpenCode runs do not see it. Restart resumes the session with `--session`. OpenCode installs the plugin's packages into that folder the first time, which needs the network once. OpenCode 2 loads plugins differently and is not supported yet: its panes run without status. If you set `OPENCODE_CONFIG_DIR` yourself, Paneherd's folder takes its place in its panes.
+- **Qwen Code**: Paneherd points `QWEN_CODE_SYSTEM_DEFAULTS_PATH` at a settings file of the pane's own that holds only hooks, in Claude Code's format. Qwen reads it under your own settings and runs its hooks next to yours, so your settings and hooks stay. The hooks report from the start, including *Needs permission*. The session starts with `--session-id`, and restart resumes it with `--resume`. If you or an administrator set `QWEN_CODE_SYSTEM_DEFAULTS_PATH` yourself, Paneherd's file takes its place in its panes.
+- **Factory Droid**: Paneherd passes a settings file of the pane's own that holds only hooks with `--settings`, which Droid adds to your own settings for that session, so your settings and hooks stay. Droid reports once you have answered whether you trust the folder, including *Needs permission*. Droid lists each hook it runs in the conversation, so you see Paneherd's `curl` lines there. Restart resumes the session with `--resume`.
 - **Gemini CLI**: no status yet. Gemini reads extra settings only from a file that an administrator owns, so Paneherd has no per-pane way to add its hooks, and it does not change your own Gemini settings. Broadcast waits a fixed few seconds. Without hooks Paneherd cannot tell whether a Gemini session took a prompt, so restarting a Gemini pane (⟳, also to apply a new color or icon) starts a new, empty session, and Gemini panes are not offered for reopening after you quit the editor; the old conversation stays in Gemini (`gemini --resume`). A window reload keeps them running.
 
 The user's own hooks still run: Copilot and Cursor also run hooks from a project's `.claude/settings.json`, and Cursor from `~/.claude/settings.json`.
 
 ## Local agents
 
-Any other command line agent can run in a pane too: Aider, OpenCode, Goose, Qwen Code, Crush, Amp, a local model through `ollama run` or LM Studio's `lms chat`, or a script of your own.
+Any other command line agent can run in a pane too: Aider, Goose, Crush, Amp, a local model through `ollama run` or LM Studio's `lms chat`, or a script of your own.
 
 1. In the sidebar, open the agent picker beside *New session* and choose **＋ Add local agent…** (or run **Paneherd: Add Local Agent…**).
 2. Pick an agent Paneherd found on your `PATH`, or **Browse for an executable…** for anything else. For one that is not installed, Paneherd offers its install page.
@@ -133,6 +142,30 @@ Any other command line agent can run in a pane too: Aider, OpenCode, Goose, Qwen
 The agent then shows up in the picker under that name. **⚙ Manage local agents…** in the same picker (or **Paneherd: Manage Local Agents…**) starts, renames, changes or removes one. Up to three local agents can be set up; they are stored in the `paneherd.custom1Path`, `custom1Label` and `custom1ExtraArgs` settings (and `custom2…`, `custom3…`), which you can also edit by hand.
 
 A local agent runs in a pane as a plain terminal: broadcast, arrange, restart, colors and icons work, but Paneherd shows no status, usage or permission prompts for it, and a restart starts a new session.
+
+## Lead sessions
+
+A lead session is a Claude Code pane that hands parts of a goal to other panes, its workers, and keeps track of them. It is part of Pro.
+
+1. Run **Paneherd: New Lead Session…**, pick a folder and type the goal. On the phone, **＋ New session** has a **Lead session** option too.
+2. The lead starts in plan mode. It splits the goal only when the parts touch different files and do not need each other's results; a small goal it does itself. Its plan says how it splits the work and ends with a line listing the workers' tiers, such as `Paneherd workers: standard, light`.
+3. The plan shows in the sidebar's permission requests and on the phone, with **Approve**, **Approve, accept edits** and **Revise…**. Its card gives a rough estimate of how much of your 5-hour window the plan may take, and says when that may be more than is left.
+4. Once you approve, the lead sets up anything the workers share, then starts them. Each worker opens as a pane in a new git worktree on its own `paneherd/` branch (outside a git repository, in the lead's own folder) and gets a short brief: its task, the files to read first and the files it should change. It commits its work and ends with a short report.
+5. The lead waits for the workers and reads each one's report and diff stat, never its whole conversation. When they are done, it checks the branches fit together and tells you what was done. It does not merge them unless you ask.
+
+In the sidebar, the lead's pane is marked **Lead** and its workers are listed under it. Workers' permission prompts reach the inbox and the phone like any other pane's, and you can prompt a worker yourself at any time.
+
+**Tiers.** The lead picks a tier per worker, and `paneherd.orchestration.tiers` says what each tier runs:
+
+| Tier | Default | For |
+|---|---|---|
+| `light` | Claude Code, Haiku, effort low | Mechanical edits, docs and tests with a check to run |
+| `standard` | Claude Code, Sonnet, effort medium | Most features and fixes |
+| `heavy` | Claude Code, Opus, effort high | Hard design or debugging |
+
+A tier can run Codex instead (`"agent": "codex"`, with a Codex model name or empty for its default). The lead may also ask for Codex or Claude Code for one worker; that worker keeps the tier's effort and runs the tier's default Claude model, or Codex's own default. The lead cannot name a model: the mapping is yours. Paneherd raises a light task to standard when it has no check (`done_when`), is a bug fix, an investigation or a design, or is to change more than 8 files. At most `maxWorkers` workers run at once and `maxWorkersPerGoal` open in all; past that, the lead is told to wait or reuse a worker.
+
+**How it talks to Paneherd.** The lead pane starts with an MCP server of Paneherd's (`--mcp-config`), on the same `127.0.0.1` server as the hooks and with the same per-window token, which sits in a file in the extension's storage and is deleted when the lead closes. Its tools start a worker, list the workers, wait for them, read a result and send a worker more text; nothing else. Workers get no such server, so they cannot start workers of their own. Who leads whom is kept in the workspace, so a window reload keeps it.
 
 ## Known limitations
 
@@ -149,6 +182,8 @@ A local agent runs in a pane as a plain terminal: broadcast, arrange, restart, c
 - Queued prompts survive a window reload for the panes that come back; a prompt that was being typed in when the window reloaded comes back as failed instead of being typed twice.
 - Usage limits appear only on Claude Pro and Max plans, and only when Paneherd can add its status line.
 - *Show* in the Chrome companion selects the pane in its own window, but the operating system brings forward the editor window that last had focus. Chrome asks once before it opens the editor.
+- A lead session runs on Claude Code only, and its workers on Claude Code or Codex. Paneherd does not merge workers' branches, and a worker that closes keeps its worktree when it has commits or changes, as any pane in its own worktree does.
+- The cost on a lead's plan card is a rough estimate from typical costs per tier, not from the plan's actual work, and it needs the usage display and a few replies in the current 5-hour window. A lead that leaves out its `Paneherd workers:` line gets no estimate.
 - Per-pane usage and the forecast are estimates. Anthropic does not publish how the limits count tokens, so Paneherd weights them by relative API price.
 
 ---
