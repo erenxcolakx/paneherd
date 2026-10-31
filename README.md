@@ -1,6 +1,6 @@
 # Paneherd
 
-A multi-agent console for Claude Code. Run several Claude Code sessions side by side in split panes in your editor, answer all their permission prompts in one place, see your plan's usage limits, and catch agents that loop or step on each other's files.
+A multi-agent console for coding agents. Run Claude Code, Codex, Copilot CLI, Gemini CLI, Cursor CLI, OpenCode, Qwen Code and Droid side by side in split panes in your editor. Answer Claude Code permission prompts in one place, see usage limits, and catch agents that loop or step on each other's files.
 
 Paneherd opens each session as a real terminal in the editor area and lays them out as a grid. A sidebar lists your open panes with live status and every saved Claude Code conversation, so you can resume any of them in one click.
 

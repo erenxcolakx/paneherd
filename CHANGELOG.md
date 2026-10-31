@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.15.2
+
+- Lead sessions: while a lead waits for its workers, its pane shows *Working* instead of *Your turn*, and no "Your turn" notification or stall alarm comes up. Claude Code moves a long wait to the background and ends its turn, but the lead is not done: it carries on by itself when a worker finishes.
+- Lead sessions: workers' worktrees use the folder's name as you opened it. On Windows and macOS, a folder opened with different letter case than on disk made Claude Code ask to trust each worker's folder again, and the worker waited at that question.
+- The folder list for a new session shows a folder once, even when it was opened with different letter case.
+- A notification's Approve, Allow or Deny for a prompt already answered elsewhere (the sidebar, the phone, the terminal, or a revised plan) now says so and offers Show. Before, the click did nothing.
+- A plan's cost estimate reads "≈1%" instead of "≈<1–1%".
+- Phone pairing: if VS Code cannot show the Allow dialog, the phone hears at once that pairing was not allowed instead of waiting out the code. The phone page also sends its request again until VS Code answers, so a request lost on the way no longer leaves it at "Check VS Code".
+
+## 0.15.1
+
+- The Marketplace listing and README now name every agent Paneherd runs: Claude Code, Codex, Copilot CLI, Gemini CLI, Cursor CLI, OpenCode, Qwen Code and Droid. No change in behaviour.
+
 ## 0.15.0
 
 - Sidebar tour: the first time the sidebar opens after install, a card at its top walks through what Paneherd does and where each part is: starting a session, pane status, the permission inbox, broadcast and the queue, usage limits and the phone remote, with a button to try the first and the last. Step with Next and Back, the dots or the arrow keys; Skip or Esc closes it. Open it again with *Show the Tour* in the sidebar's ⋯ menu (or *Paneherd: Show the Tour*).
