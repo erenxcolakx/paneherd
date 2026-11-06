@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.1
+
+- The free plan no longer limits how many sessions run at once.
+
+## 0.16.0
+
+- **While you were away**: a pane that finished turns while you were not looking at it says what it did on its sidebar row: turns and time, files written, whether the last test and build runs passed. Hover for the gist of the agent's last message, the files, the runs and the permission prompts. A warning shows when the last message says the tests pass or the build is clean but the hooks saw otherwise. The phone shows the same on the pane and under its conversation. Built from the pane's own hooks, with no model call. It stays after you look until you prompt the pane from its terminal.
+- **Claude profiles** (`paneherd.claudeProfiles`): run Claude Code panes under separate accounts, such as work and personal. Each profile is a name and a folder, and its pane runs Claude Code with that folder as `CLAUDE_CONFIG_DIR`, so sign-in, settings and conversations stay apart. Pick a profile next to Claude Code beside *New session*, or run *New Claude Code Session with a Profile…*. The pane's row shows the profile, its conversations are listed and reopen under it, and a lead's workers use the lead's profile. The usage limits shown stay the default account's.
+- **Review Worktrees…** (the sidebar's ⋯ menu, or *Paneherd: Review Worktrees…*): every worktree Paneherd made in the open repositories, with the commits its branch has that the main folder's branch lacks and its uncommitted files. Pick one to see all its changes in one diff against where it branched off, commit them, merge its branch, open a session in it, or delete it with its branch. Deleting asks first when work would be lost. A merge that conflicts is undone at once and names the files, so the main folder is never left half merged. One item removes all worktrees with nothing new. The note that a closed pane's worktree was kept now has a **Review** button.
+- New worktrees get the files git leaves out: ignored files matching `.env` and `.env.*` are copied in (`paneherd.worktreeInclude`), or what a `.worktreeinclude` file at the repository root names (the file Claude Code reads for its own worktrees). Files the worktree already has are left alone, and `node_modules` is not walked.
+- `paneherd.worktreePort`: give each pane in its own worktree a `PORT` of its own, counting up from the number you set, so dev servers in parallel worktrees do not collide. A worktree keeps its port across reloads until it is removed. Lead sessions' workers get one too. Off by default.
+- *New Session in Own Git Worktree From a Branch…* picks the branch a new worktree starts from, local or remote, most recent first. `paneherd.worktreeBase: ask` asks every time. The new branch does not track the branch it started from.
+
 ## 0.15.2
 
 - Lead sessions: while a lead waits for its workers, its pane shows *Working* instead of *Your turn*, and no "Your turn" notification or stall alarm comes up. Claude Code moves a long wait to the background and ends its turn, but the lead is not done: it carries on by itself when a worker finishes.
