@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.2
+
+- Notifications are free: a notification when a pane needs you (a permission prompt, a question, a finished turn) while you look elsewhere, on the desktop, on a paired phone and in the Chrome companion. Answering prompts from a notification, the phone or Chrome stays Pro.
+- **New Session Without Permission Prompts…**: starts a pane whose agent runs commands and changes files without asking (`--dangerously-skip-permissions` for Claude Code, `--approval-mode yolo` for Gemini and Qwen Code, and each agent's own flag). Codex keeps its sandbox: it never asks, and commands still write only inside the folder. It asks you to confirm, a ⚡ icon marks the pane, and the flags stay with the pane through Restart and Reload Window. The conflict guard still makes Claude ask before such a pane overwrites a file another pane just changed.
+- The review request now shows in Cursor and the other editors that install from Open VSX too, and opens Open VSX's review page there. It still asks at most twice, after several days of use.
+
 ## 0.16.1
 
 - The free plan no longer limits how many sessions run at once.
