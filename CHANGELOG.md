@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.3
+
+- The Marketplace name now says what Paneherd is: multi-agent panes for Claude Code and Codex sessions. Nothing else changed.
+
 ## 0.16.2
 
 - Notifications are free: a notification when a pane needs you (a permission prompt, a question, a finished turn) while you look elsewhere, on the desktop, on a paired phone and in the Chrome companion. Answering prompts from a notification, the phone or Chrome stays Pro.
