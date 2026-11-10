@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.4
+
+- The Marketplace description and the top of the README now say what is free (unlimited sessions, notifications, usage limits, phone remote) and what Pro adds. Nothing else changed.
+
 ## 0.16.3
 
 - The Marketplace name now says what Paneherd is: multi-agent panes for Claude Code and Codex sessions. Nothing else changed.
