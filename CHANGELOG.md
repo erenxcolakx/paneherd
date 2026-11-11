@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.6
+
+- **Paneherd's own terminal (experimental).** Panes can run in Paneherd's own terminal instead of VS Code's: a rounded card whose outline shows the pane's status (blue while it works, orange while it needs your permission, green when it is your turn), with the pane's name, agent and status on top. Switch with *Terminal: VS Code | Paneherd* under *Open panes*, or the `paneherd.terminal` setting. VS Code's terminal stays the default.
+- Panes in Paneherd's terminal survive a window reload: the agents keep running in a small background process and the panes come back to them.
+- While a pane has the keyboard, keys go to the agent (Ctrl+B, Ctrl+K and the like); VS Code keeps the command palette, Quick Open, the views and moving between editors. Ctrl+V pastes text, or lets Claude read an image from the clipboard. Ctrl+F finds in the pane, Ctrl+click opens files at their line and links, and files dropped on a pane type their paths. Claude Code connects to VS Code (`/ide`) as it does in VS Code's terminal, and screen reader mode follows VS Code's.
+- The sessions list matches the new sidebar: the agent's color before the project, a session count, tinted badges, and search and filters of one height.
+- Edit, Restart and Close on a pane row no longer cover the line under the pane's name.
+
 ## 0.16.5
 
 - A new look for the sidebar. Each pane shows its status on the right of its title, in color, and its agent with a colored mark. The usage limits take one line each. Edit, Restart and Close show when you point at a pane, and the checkbox for sending a prompt sits where the status dot is.
