@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.5
+
+- A new look for the sidebar. Each pane shows its status on the right of its title, in color, and its agent with a colored mark. The usage limits take one line each. Edit, Restart and Close show when you point at a pane, and the checkbox for sending a prompt sits where the status dot is.
+- **2 waiting** next to *Open panes* takes you to the next pane that needs you.
+- Status dots pulse while a pane works and glow while it waits for you. They stay still when your system asks for reduced motion, and high contrast themes get an outline instead of the glow.
+- Claude Code panes get a status line from Paneherd: the pane's name in its tab color, the other panes waiting for you, how full the context is, the session and week limits, and the model. Your own `statusLine` still wins.
+- The status bar counts panes, working panes, panes waiting for you and alarms, and turns to the warning color while a pane waits.
+- New theme colors `paneherd.ready`, `paneherd.working`, `paneherd.waiting` and `paneherd.error`, to change in `workbench.colorCustomizations`.
+
 ## 0.16.4
 
 - The Marketplace description and the top of the README now say what is free (unlimited sessions, notifications, usage limits, phone remote) and what Pro adds. Nothing else changed.
