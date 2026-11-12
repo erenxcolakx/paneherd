@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.16.7
+
+- **Hand a pane over** (*Paneherd: Hand a Pane Over to Another Agent*, `paneherd.handoff`): continue a pane's work in a new pane of another agent, in the same folder. The new agent gets a brief: the folder and branch, the files changed so far, the old agent's last reply and what it was waiting on. The old pane is left as it was. When Claude's 5-hour limit is 95% used, Paneherd offers this once per window.
+- **Prompt cache, as Claude Code reports it.** From Claude Code 2.1.251 the cache's real expiry, lifetime (5 minutes or 1 hour) and the size of a rewrite come from its status line, not from a guess; older versions keep the estimate. A pane's cache note now also tells, in its tooltip, how much of the conversation was read from the cache and why the cache last missed.
+- **Cold-cache guard.** A broadcast to Claude Code panes whose prompt cache has run out says so first, with what rewriting their conversations costs of your 5-hour limit, and sends on a second Enter. Turn it off with `paneherd.warnColdCacheOnSend`.
+- **The queue waits for the 5-hour limit.** From 98% used (`paneherd.queueHoldAtPercent`, `0` turns it off) until the window resets, queued prompts are not typed into Claude Code panes, where they would only earn a refusal and use up the task. The sidebar says when the queue resumes. Codex panes are not held.
+- **A run's cost on its lead.** A lead session's row shows its own share of the 5-hour limit and its workers' together (`run ≈31%`), with the split in the tooltip. It is an estimate from token counts.
+- **Context fill.** From 50% a pane's row shows how full its context window is. At 70% and more, while the pane waits for you and its cache is warm, the tooltip suggests `/compact` (cheap now, full price once the cache runs out) or `/clear`.
+- **Token diet** (*Paneherd: Check What Makes Requests Big*): a local check of CLAUDE.md length (Anthropic suggests under 200 lines), AGENTS.md size (Codex reads 32 KiB), MCP servers and whether tool search is on, each with the documentation behind it. Nothing leaves your machine.
+
 ## 0.16.6
 
 - **Paneherd's own terminal (experimental).** Panes can run in Paneherd's own terminal instead of VS Code's: a rounded card whose outline shows the pane's status (blue while it works, orange while it needs your permission, green when it is your turn), with the pane's name, agent and status on top. Switch with *Terminal: VS Code | Paneherd* under *Open panes*, or the `paneherd.terminal` setting. VS Code's terminal stays the default.
