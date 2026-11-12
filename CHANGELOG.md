@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.8
+
+- **Context fill on Codex panes.** A Codex pane's row now shows how full its context window is, from 50%, like Claude Code panes do. Codex has no status line, so it is estimated from the session's own log and can differ a little from Codex's figure.
+- **Shift+Enter is a new line** in Paneherd's own terminal (experimental), instead of sending the message.
+
 ## 0.16.7
 
 - **Hand a pane over** (*Paneherd: Hand a Pane Over to Another Agent*, `paneherd.handoff`): continue a pane's work in a new pane of another agent, in the same folder. The new agent gets a brief: the folder and branch, the files changed so far, the old agent's last reply and what it was waiting on. The old pane is left as it was. When Claude's 5-hour limit is 95% used, Paneherd offers this once per window.
