@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.10
+
+- **The bottom panel no longer pops open when you send a prompt** in Paneherd's own terminal (experimental). Claude there connected to the Claude Code extension, which brings back the last VS Code terminal you used on every prompt. That link is now off by default; turn on `paneherd.claudeIdeIntegration` if you want diffs in the editor and the selection sent to Claude, and accept the panel opening.
+
 ## 0.16.9
 
 - **Ready to merge?** A pane that waits for you in its own git worktree now says on its row whether there is something to merge: *ready to merge* (commits the main folder's branch lacks, nothing left uncommitted), *N uncommitted* (files a merge would leave behind) or *tests failed* (the last test run in the pane failed). Hover for the detail; *Review Worktrees…* shows the diff, commits or merges.
