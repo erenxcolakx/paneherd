@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.9
+
+- **Ready to merge?** A pane that waits for you in its own git worktree now says on its row whether there is something to merge: *ready to merge* (commits the main folder's branch lacks, nothing left uncommitted), *N uncommitted* (files a merge would leave behind) or *tests failed* (the last test run in the pane failed). Hover for the detail; *Review Worktrees…* shows the diff, commits or merges.
+
 ## 0.16.8
 
 - **Context fill on Codex panes.** A Codex pane's row now shows how full its context window is, from 50%, like Claude Code panes do. Codex has no status line, so it is estimated from the session's own log and can differ a little from Codex's figure.
