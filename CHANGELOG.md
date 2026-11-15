@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.11
+
+- **Antigravity CLI** (`agy`), Google's successor to Gemini CLI for personal Google accounts. Pick it next to *New session*, or run *New Antigravity Session*. Its panes report status like the others: Paneherd adds a `paneherd` entry to agy's global `~/.gemini/config/hooks.json` whose script does nothing outside a Paneherd pane, so your other agy sessions run as before. Permission prompts stay in agy's own dialog. Settings: `paneherd.antigravityPath`, `paneherd.antigravityExtraArgs`. Gemini CLI panes remain for API-key use.
+- **Hand a pane over anytime.** Each pane row has a ⇄ button (and the sidebar's ⋯ menu has the same command) so you can continue in another agent before Claude's 5-hour limit is nearly used up. The automatic offer at 95% still appears once per window.
+
 ## 0.16.10
 
 - **The bottom panel no longer pops open when you send a prompt** in Paneherd's own terminal (experimental). Claude there connected to the Claude Code extension, which brings back the last VS Code terminal you used on every prompt. That link is now off by default; turn on `paneherd.claudeIdeIntegration` if you want diffs in the editor and the selection sent to Claude, and accept the panel opening.
