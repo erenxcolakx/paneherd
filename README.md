@@ -33,6 +33,10 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
   - **A port of its own**: set `paneherd.worktreePort` to a first port (say `4100`) and each pane in its own worktree gets `PORT=4100`, `4101` and so on, so dev servers in parallel worktrees do not collide. A worktree keeps its port until it is removed. Off by default.
   - **Start from a branch**: *New Session in Own Git Worktree From a Branch…* asks which branch the worktree starts from, local or remote; `paneherd.worktreeBase: ask` asks every time. The new branch does not track the one it started from.
   - **Review Worktrees…** (the sidebar's ⋯ menu): lists the worktrees Paneherd made in the open repositories, with how many commits each has that the main folder's branch lacks and how many files are uncommitted. Pick one to see all its changes in one diff, commit them, merge its branch into the main folder's branch, start a session in it, or delete it with its branch (after asking, when that loses work). A merge that conflicts is undone at once and names the files, so the main folder is never left half merged. One item removes every worktree with nothing new.
+  - **Merge queue** (Pro, *Merge Ready Worktrees in Order…*): lands the worktrees you pick in the main folder one at a time, oldest first. Each is rebased onto the main folder's branch, checked in its worktree (its lead's `done_when`, else `paneherd.mergeQueue.checkCommand`, else the folder's usual test command), and fast-forwarded in only when the check passes. Conflicts and failed checks leave the main branch alone and can be sent to the pane that made the branch. A branch that changed its own tests is marked *tests changed* and starts unpicked.
+  - **Queue for later** (Pro, *Queue a Prompt for Later…*): leave prompts for a clock time, for when Claude's 5-hour window resets, or for an hour or three from now; the queue shows when each starts. When they are all taken and done, one notification (on the phone too) says what happened. VS Code has to stay open.
+  - **While you were away**: back at the editor after an hour or more (`paneherd.awaySummaryMinutes`), one notification sums up turns ended, test results, worktrees ready to merge and panes waiting for you.
+  - **Review by another agent** (Pro, *Review a Worktree with Another Agent…*): opens a read-only pane of the other vendor's agent in the worktree (Codex for Claude Code's work, Claude Code for Codex's) with the diff, the task and the changed tests. When it ends, Paneherd shows its verdict and can send the findings to the pane that made the branch; the merge queue shows the verdict next to the branch.
 - **Lead sessions (Pro)**: give one Claude Code pane a goal, and it plans how to split it across worker panes, each in its own git worktree and branch. You approve the plan first; then the lead starts the workers, waits for them and reads their reports. Workers run at the model and effort of the tier the lead picks, so mechanical work goes to a cheaper model. See [Lead sessions](#lead-sessions).
 - **Sessions without permission prompts**: *New Session Without Permission Prompts…* starts a pane whose agent runs commands and changes files without asking: Claude Code with `--dangerously-skip-permissions`, Codex with `--ask-for-approval never --sandbox workspace-write` (it never asks, and its sandbox still keeps commands to the folder), Copilot with `--allow-all-tools` (paths outside the folder and URLs still ask), Gemini and Qwen Code with `--approval-mode yolo`, Antigravity with `--dangerously-skip-permissions`, Cursor with `--force`, OpenCode with `--auto` and Droid with `--auto high`. It asks you to confirm first, a ⚡ icon marks the pane, and the flags stay with the pane through Restart and Reload Window. Claude Code asks once, the first time, to accept its bypass mode. The conflict guard (Pro) still makes Claude ask before such a pane writes a file another pane just changed. Otherwise nothing stops a wrong command, so use it where a mistake is cheap to undo, such as its own git worktree. To start every session of an agent this way, add the flag to its `paneherd.*ExtraArgs` setting instead.
 - **Broadcast**: type once and send it to any set of panes. Multi-line text arrives as a single paste. A pane that is still starting gets the text once its prompt is up.
@@ -63,6 +67,8 @@ Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=
 | Pane budget | | ✓ |
 | Task queue | | ✓ |
 | Lead sessions | | ✓ |
+| Merge queue | | ✓ |
+| Review by another agent | | ✓ |
 | Limit forecast | | ✓ |
 | Notifications when a pane needs you | ✓ | ✓ |
 | Phone remote: status, conversation history and sending prompts | ✓ | ✓ |
@@ -118,6 +124,10 @@ Apart from that and a paired phone, nothing leaves your machine. Paneherd has no
 | `paneherd.orchestration.tiers` | Haiku · Sonnet · Opus | The agent, model and effort a worker runs at each tier (`light`, `standard`, `heavy`), see [Lead sessions](#lead-sessions). |
 | `paneherd.orchestration.maxWorkers` | `3` | Worker panes one lead runs at once. |
 | `paneherd.orchestration.maxWorkersPerGoal` | `6` | Worker panes one lead may open in all. |
+| `paneherd.orchestration.spillToCodexAt` | `90` | From this much of Claude's 5-hour window used, new light and standard workers run on Codex while it has room; `0`: only when chosen on the plan card. |
+| `paneherd.awaySummaryMinutes` | `60` | Minutes away from the editor window after which coming back shows one summary of what the panes did; `0` is off. |
+| `paneherd.mergeQueue.checkCommand` | `""` | The check the merge queue runs in a worktree before merging it, such as `npm test`. Empty: guessed from the folder. A worker's `done_when` comes first. |
+| `paneherd.mergeQueue.checkMinutes` | `15` | How long one check (merge queue or `done_when`) may run. |
 | `paneherd.defaultAgent` | `claude` | The agent a new session starts with (`claude`, `codex`, `copilot`, `gemini`, `antigravity`, `cursor`, `opencode`, `qwen`, `droid`). |
 | `paneherd.<agent>Path`, `paneherd.<agent>ExtraArgs` | | Path and extra arguments for `codex`, `copilot`, `gemini`, `antigravity`, `cursor`, `opencode`, `qwen` and `droid` panes. |
 
@@ -163,7 +173,8 @@ A lead session is a Claude Code pane that hands parts of a goal to other panes, 
 2. The lead starts in plan mode. It splits the goal only when the parts touch different files and do not need each other's results; a small goal it does itself. Its plan says how it splits the work and ends with a line listing the workers' tiers, such as `Paneherd workers: standard, light`.
 3. The plan shows in the sidebar's permission requests and on the phone, with **Approve**, **Approve, accept edits** and **Revise…**. Its card gives a rough estimate of how much of your 5-hour window the plan may take, and says when that may be more than is left.
 4. Once you approve, the lead sets up anything the workers share, then starts them. Each worker opens as a pane in a new git worktree on its own `paneherd/` branch (outside a git repository, in the lead's own folder) and gets a short brief: its task, the files to read first and the files it should change. It commits its work and ends with a short report.
-5. The lead waits for the workers and reads each one's report and diff stat, never its whole conversation. When they are done, it checks the branches fit together and tells you what was done. It does not merge them unless you ask.
+5. When a worker's turn ends and it has a check (`done_when`, such as `npm test`), Paneherd runs the check in the worker's worktree. A failure goes back to the worker with the end of the output, up to twice, before the lead hears of it. So "tests pass" in a worker's report is not taken on its word.
+6. The lead waits for the workers and reads each one's report, diff stat and check result, never its whole conversation. When they are done, it checks the branches fit together and tells you what was done. It does not merge them unless you ask. The merge queue lands them, each checked again on top of the others.
 
 In the sidebar, the lead's pane is marked **Lead** and its workers are listed under it. Workers' permission prompts reach the inbox and the phone like any other pane's, and you can prompt a worker yourself at any time.
 
@@ -174,6 +185,8 @@ In the sidebar, the lead's pane is marked **Lead** and its workers are listed un
 | `light` | Claude Code, Haiku, effort low | Mechanical edits, docs and tests with a check to run |
 | `standard` | Claude Code, Sonnet, effort medium | Most features and fixes |
 | `heavy` | Claude Code, Opus, effort high | Hard design or debugging |
+
+**When Claude's window runs short.** From 90% of Claude's 5-hour window used (`paneherd.orchestration.spillToCodexAt`; `0` turns it off), new light and standard workers run on Codex instead, as long as Codex has room (under 90% of its own window, as Codex last reported it on this computer). Heavy workers and workers the lead tied to an agent stay. When a plan may not fit, its card offers to run its light and standard workers on Codex from the start.
 
 A tier can run Codex instead (`"agent": "codex"`, with a Codex model name or empty for its default). The lead may also ask for Codex or Claude Code for one worker; that worker keeps the tier's effort and runs the tier's default Claude model, or Codex's own default. The lead cannot name a model: the mapping is yours. Paneherd raises a light task to standard when it has no check (`done_when`), is a bug fix, an investigation or a design, or is to change more than 8 files. At most `maxWorkers` workers run at once and `maxWorkersPerGoal` open in all; past that, the lead is told to wait or reuse a worker.
 
@@ -190,11 +203,13 @@ A tier can run Codex instead (`"agent": "codex"`, with a Codex model name or emp
 - If your organization's managed settings allow only managed hooks, status is unavailable.
 - The conflict guard sees edits made with Claude's file tools, not files changed by shell commands.
 - A stall alarm means silence, not a fault: a long build or test run looks the same.
+- The merge queue and `done_when` run their check in the worktree, which has no `node_modules` of its own: Node finds the main folder's through the parent folders, but a project that needs its own install or build in each checkout needs a check that does it (such as `npm ci && npm test`). *Tests changed* goes by file names and test runner settings; it does not read what the change does.
+- A reviewer from another agent is read-only as far as its agent allows: Codex's read-only sandbox, Claude Code without Edit, Write and NotebookEdit. A Claude Code reviewer can still ask to run other shell commands, which you answer as usual. A Codex reviewer's verdict is read when its hooks report the end of its turn; with Codex's hooks not trusted yet, no verdict comes.
 - A queued prompt goes in as soon as its pane's turn ends, even when Claude ended it with a question. Pause the queue to answer first.
 - Queued prompts survive a window reload for the panes that come back; a prompt that was being typed in when the window reloaded comes back as failed instead of being typed twice.
 - Usage limits appear only on Claude Pro and Max plans, and only when Paneherd can add its status line.
 - *Show* in the Chrome companion selects the pane in its own window, but the operating system brings forward the editor window that last had focus. Chrome asks once before it opens the editor.
-- A lead session runs on Claude Code only, and its workers on Claude Code or Codex. Paneherd does not merge workers' branches by itself, and a worker that closes keeps its worktree when it has commits or changes, as any pane in its own worktree does. *Review Worktrees…* shows, merges or deletes them.
+- A lead session runs on Claude Code only, and its workers on Claude Code or Codex. Paneherd does not merge workers' branches by itself (the merge queue does, one at a time, only when you start it), and a worker that closes keeps its worktree when it has commits or changes, as any pane in its own worktree does. *Review Worktrees…* shows, merges or deletes them.
 - The cost on a lead's plan card is a rough estimate from typical costs per tier, not from the plan's actual work, and it needs the usage display and a few replies in the current 5-hour window. A lead that leaves out its `Paneherd workers:` line gets no estimate.
 - Per-pane usage and the forecast are estimates. Anthropic does not publish how the limits count tokens, so Paneherd weights them by relative API price.
 
