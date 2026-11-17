@@ -1,18 +1,36 @@
 # Paneherd
 
-Run several Claude Code, Codex, Copilot CLI, Gemini CLI, Antigravity CLI, Cursor CLI, OpenCode, Qwen Code and Droid sessions side by side in your editor, as many as you like. Get a notification (or a sound) when one needs you or finishes, see your Claude and Codex usage limits, and start sessions that run without permission prompts. With Pro, every Claude Code permission prompt lands in one inbox you can answer from the sidebar or your phone.
+Run Claude Code, Codex and other agent CLIs side by side in a grid, in VS Code or Cursor. See which session waits on you and how much of your limit is left.
 
-**Free:** unlimited sessions · notifications · usage limits · phone remote · **Pro, $2.99 once:** permission inbox · conflict guard · approve from your phone
+**Free:** unlimited sessions · notifications · usage limits · worktrees · phone remote  **Pro, $2.99 once:** conflict guard · limit forecast · merge queue · permission inbox
 
-Paneherd opens each session as a real terminal in the editor area and lays them out as a grid. A sidebar lists your open panes with live status and every saved Claude Code conversation, so you can resume any of them in one click.
+![Paneherd overview: agent sessions in a grid, live status, usage limits and worktree review](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/overview.gif)
 
-Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=readme). Guides: [run several Claude Code sessions at once](https://paneherd.com/guides/multiple-claude-code-sessions), [Claude Code worktrees](https://paneherd.com/guides/claude-code-worktrees), [run Codex and Claude Code together](https://paneherd.com/guides/run-codex-and-claude-code-together), [Claude Code usage limits](https://paneherd.com/claude-code-usage-limit) and [how Paneherd compares](https://paneherd.com/compare) with Claude Code's own tools, VS Code, Superset, Conductor, Claude Squad and cmux.
+### Every agent in its own terminal pane
+Claude Code, Codex, Copilot, Gemini, Antigravity, Cursor, OpenCode, Qwen Code, Droid, or any CLI.
 
-![Four Claude Code sessions in a grid, with the Paneherd sidebar: usage limits, three permission requests, open panes and a queued prompt](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/grid.png)
+![Six agent sessions in one grid](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/02-terminals.png)
 
-![Three Claude Code sessions working side by side while permission requests are answered from the Paneherd sidebar](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/demo.gif)
+### Know who is waiting, and how much limit is left
+Live status from Claude Code's own hooks, plus your 5-hour and weekly limits (Codex's too).
 
-## Features
+![Usage limits and permission prompts in the sidebar](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/03-limits.png)
+
+### A git worktree per session, ready to merge
+Each row says if it can be merged. Review the diff, merge it, or queue the merges behind passing tests.
+
+![Worktree review and merge](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/worktree.gif)
+
+![Worktree rows with ready to merge, uncommitted and tests failed chips](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/04-worktree-chips.png)
+
+### Or answer from your phone
+Scan a QR code, no app. Messages are end-to-end encrypted.
+
+![The phone remote](https://raw.githubusercontent.com/erenxcolakx/paneherd/main/images/06-phone.png)
+
+Website: [paneherd.com](https://paneherd.com/?utm_source=marketplace&utm_medium=readme) · [compare](https://paneherd.com/compare) · [guides](https://paneherd.com/guides/multiple-claude-code-sessions)
+
+## All features
 
 - **Grid of sessions**: new sessions and resumed conversations open as editor-area terminals arranged in 1–4 columns. *Arrange Panes in a Grid* tidies them up at any time.
 - **Live status from Claude Code itself**: each pane shows *Working*, *Needs permission*, *Has a question*, *Your turn* or *Ended*. The status comes from Claude Code hook events, not from guessing at terminal output.

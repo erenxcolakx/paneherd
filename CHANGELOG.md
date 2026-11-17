@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.18.1
+
+- The Marketplace page leads with a short tour in pictures and GIFs; the full feature list follows.
+
 ## 0.18.0
 
 - **Start a stuck pane fresh** (Pro: *Start fresh* on a loop, failing-calls or stall alarm, or *Start a Stuck Pane Fresh* in the command palette). Paneherd ends the Claude Code pane's turn, clears its context with `/clear`, and gives it back its first prompt, the files it changed, its last message and why it got stuck, with a word not to repeat what went round in circles. The pane keeps its terminal, folder and branch, and a lead's worker stays that lead's worker.
