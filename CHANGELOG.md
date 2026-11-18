@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.2
+
+- A plan or a question you answer in the terminal now leaves the permission list in the sidebar and on the phone. Claude reports such a prompt back with changed input (the answers, an edited plan), so the entry never matched and stayed.
+- Resizing or collapsing a pane no longer squeezes its text. A pane that was caught at a few columns mid-animation told the agent that width, and the agent's redrawn lines kept their narrow breaks after the pane opened again. Widths under 24 columns are ignored and the size is sent once the pane stops moving.
+- Phone page: a half-written prompt survives a reload (kept per conversation on the phone only), the "Sent" toast shows under the top bar instead of over the newest message, and the prompt box is wider.
+
 ## 0.18.1
 
 - The Marketplace page leads with a short tour in pictures and GIFs; the full feature list follows.
