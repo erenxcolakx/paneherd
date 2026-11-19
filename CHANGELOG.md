@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.18.3
+
+- Paneherd's own terminal draws text in your terminal font again on VS Code 1.147. VS Code's new Chromium ignored the font the terminal's GPU renderer asked for, so letters fell back to a small proportional font with wide gaps between them. If your panes look like that, run Developer: Reload Webviews after updating; the sessions keep running.
+
 ## 0.18.2
 
 - A plan or a question you answer in the terminal now leaves the permission list in the sidebar and on the phone. Claude reports such a prompt back with changed input (the answers, an edited plan), so the entry never matched and stayed.
