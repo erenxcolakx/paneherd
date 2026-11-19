@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.4
+
+- A bell in the sidebar's title bar, next to the phone icon, turns notifications and sound on or off in one click. With it on, a pane that ends its turn, asks a question or needs permission plays a short system sound, and shows a notification at the bottom right while you are looking at another pane or app. Turning it on plays the sound once, so you know what to listen for; off and on again keeps your `paneherd.sound` choice. The defaults are unchanged (notifications on, sound off), so the bell starts slashed.
+- The sound now plays for the pane you are looking at too, for when you are looking away from the screen. The notification still shows only when you are looking elsewhere.
+- A paired phone's notifications follow the switch on its own page, and no longer stop when `paneherd.notifications` or the bell is off: the bell silences this computer, the phone is for when you are away from it.
+
 ## 0.18.3
 
 - Paneherd's own terminal draws text in your terminal font again on VS Code 1.147. VS Code's new Chromium ignored the font the terminal's GPU renderer asked for, so letters fell back to a small proportional font with wide gaps between them. If your panes look like that, run Developer: Reload Webviews after updating; the sessions keep running.
