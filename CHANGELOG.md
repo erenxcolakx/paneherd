@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.18.5
+
+- The store listing now says what Paneherd is for: multiple Claude Code and Codex sessions, git worktrees and notifications. Nothing else changed.
+
 ## 0.18.4
 
 - A bell in the sidebar's title bar, next to the phone icon, turns notifications and sound on or off in one click. With it on, a pane that ends its turn, asks a question or needs permission plays a short system sound, and shows a notification at the bottom right while you are looking at another pane or app. Turning it on plays the sound once, so you know what to listen for; off and on again keeps your `paneherd.sound` choice. The defaults are unchanged (notifications on, sound off), so the bell starts slashed.
